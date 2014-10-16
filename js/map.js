@@ -4,7 +4,7 @@
 var mapLat = 58.825;
 var mapLon = 5.72;
 
-var map = L.map('map').setView([mapLat, mapLon], 13);
+var map = L.map('map').setView([mapLat, mapLon], 12);
 
 var geonorge_wms = "http://wms.geonorge.no/skwms1/wms.topo2.graatone?"
 
@@ -32,11 +32,39 @@ var circle = L.circle([mapLat, mapLon - 0.02], 500, {
 }).addTo(map);
 
 var polygon = L.polygon([
-    [mapLat + 0.01, mapLon + 0.012],
-    [mapLat + 0.002, mapLon + 0.002],
-    [mapLat - 0.005, mapLon + 0.015]
+    [mapLat + 0.01, mapLon + 0.022],
+    [mapLat + 0.002, mapLon + 0.012],
+    [mapLat - 0.005, mapLon + 0.025]
 ]).addTo(map);
 
 marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 circle.bindPopup("I am a circle.");
 polygon.bindPopup("I am a polygon.");
+
+var popup = L.popup()
+    .setLatLng([mapLat + 0.01, mapLon])
+    .setContent("I am a standalone popup.")
+    .openOn(map);
+
+map.on('click', onMapClick);
+
+var clickPopup = L.popup();
+
+function onMapClick(e) {
+    clickPopup.setLatLng(e.latlng)
+        .setContent("You clicked at " + e.latlng.toString())
+        .openOn(map);
+}
+
+var greenIcon = L.icon({
+    iconUrl: 'img/leaf-green.png',
+    shadowUrl: 'img/leaf-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+L.marker([mapLat + 0.011, mapLon + 0.014], {icon: greenIcon}).addTo(map);
