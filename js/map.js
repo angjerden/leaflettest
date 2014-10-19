@@ -42,7 +42,7 @@ circle.bindPopup("I am a circle.");
 polygon.bindPopup("I am a polygon.");
 
 var popup = L.popup()
-    .setLatLng([mapLat + 0.01, mapLon])
+    .setLatLng([mapLat + 0.03, mapLon - 0.06])
     .setContent("I am a standalone popup.")
     .openOn(map);
 
@@ -56,6 +56,7 @@ function onMapClick(e) {
         .openOn(map);
 }
 
+/*
 var greenIcon = L.icon({
     iconUrl: 'img/leaf-green.png',
     shadowUrl: 'img/leaf-shadow.png',
@@ -68,3 +69,27 @@ var greenIcon = L.icon({
 });
 
 L.marker([mapLat + 0.011, mapLon + 0.014], {icon: greenIcon}).addTo(map);
+*/
+
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'img/leaf-shadow.png',
+        iconSize:     [38, 95],
+        shadowSize:   [50, 64],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
+    }
+});
+
+var greenIcon = new LeafIcon({iconUrl: 'img/leaf-green.png'}),
+    redIcon = new LeafIcon({iconUrl: 'img/leaf-red.png'}),
+    orangeIcon = new LeafIcon({iconUrl: 'img/leaf-orange.png'});
+
+L.icon = function (options) {
+    return new L.Icon(options);
+};
+
+L.marker([mapLat + 0.011, mapLon + 0.014], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
+L.marker([mapLat + 0.011, mapLon - 0.014], {icon: redIcon}).addTo(map).bindPopup("I am a red leaf.");
+L.marker([mapLat - 0.011, mapLon - 0.014], {icon: orangeIcon}).addTo(map).bindPopup("I am an orange leaf.");
