@@ -90,6 +90,41 @@ L.icon = function (options) {
     return new L.Icon(options);
 };
 
-L.marker([mapLat + 0.011, mapLon + 0.014], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
-L.marker([mapLat + 0.011, mapLon - 0.014], {icon: redIcon}).addTo(map).bindPopup("I am a red leaf.");
-L.marker([mapLat - 0.011, mapLon - 0.014], {icon: orangeIcon}).addTo(map).bindPopup("I am an orange leaf.");
+L.marker([mapLat + 0.021, mapLon + 0.024], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
+L.marker([mapLat + 0.021, mapLon - 0.024], {icon: redIcon}).addTo(map).bindPopup("I am a red leaf.");
+L.marker([mapLat - 0.021, mapLon - 0.024], {icon: orangeIcon}).addTo(map).bindPopup("I am an orange leaf.");
+
+var homeFeature = {
+    "type": "Feature",
+    "properties": {
+        "name": "Home",
+        "popupContent": "And at that moment, I knew what I wanted to be when I grew up!"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [5.74218, 58.82747]
+    }
+};
+
+var geoJsonStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 0.65
+};
+
+var myLines = [{
+    "type": "LineString",
+    "coordinates": [[5.72, 58.825], [5.74, 58.827], [5.70, 58.820]]
+}, {
+    "type": "LineString",
+    "coordinates": [[5.72, 58.830], [5.73, 58.830], [5.72, 58.820]]
+}];
+
+var geoJsonLayer = L.geoJson().addTo(map);
+geoJsonLayer.addData(homeFeature);
+
+geoJsonLayer.addData(myLines);
+
+geoJsonLayer.setStyle(geoJsonStyle);
+
+geoJsonLayer.bindPopup(homeFeature.properties.popupContent); //bind the popup content to the layer
